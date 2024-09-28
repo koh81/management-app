@@ -46,10 +46,6 @@ export class TaskListComponent implements OnInit {
     this.taskService.toggleTaskCompletion(taskId);
   }
 
-  editTask(task: Task): void {
-    // Implement edit functionality (e.g., open TaskFormComponent)
-  }
-
   deleteTask(taskId: number): void {
     this.taskService.deleteTask(taskId);
   }

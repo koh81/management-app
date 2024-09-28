@@ -1,0 +1,57 @@
+.task-list {
+    margin-top: 20px;
+  }
+  .filter-buttons {
+    margin-bottom: 10px;
+  }
+  .filter-buttons button {
+    background-color: var(--primary-yellow);
+    color: var(--text-dark);
+    margin-right: 5px;
+  }
+  .filter-buttons button:hover {
+    background-color: var(--accent-orange);
+    color: var(--text-light);
+  }
+  .task-item {
+    background-color: var(--background-white);
+    border: 1px solid var(--primary-blue);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  .task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .task-item .completed {
+    text-decoration: line-through;
+    color: var(--primary-red);
+  }
+  .due-date {
+    font-size: 0.9em;
+    color: var(--primary-blue);
+  }
+  .task-actions {
+    margin-top: 10px;
+  }
+  .task-actions button {
+    margin-right: 5px;
+  }
+  .delete-btn {
+    background-color: var(--primary-red);
+  }
+  .delete-btn:hover {
+    background-color: #ff4136;
+  }
+  .person-list {
+    margin-top: 10px;
+    padding-left: 20px;
+    color: var(--primary-blue);
+  }
+  .skill-list {
+    padding-left: 20px;
+    color: var(--text-dark);
+  }

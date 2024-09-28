@@ -1,0 +1,33 @@
+.person-form {
+    margin-bottom: 15px;
+  }
+  .form-group {
+    margin-bottom: 10px;
+  }
+  .skills-section {
+    margin-top: 15px;
+  }
+  .skill-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .skill-item input {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  .add-btn {
+    background-color: var(--primary-yellow);
+    color: var(--text-dark);
+    margin-bottom: 10px;
+  }
+  .add-btn:hover {
+    background-color: var(--accent-orange);
+    color: var(--text-light);
+  }
+  .remove-btn {
+    background-color: var(--primary-red);
+  }
+  .remove-btn:hover {
+    background-color: #ff4136;
+  }
