@@ -1,1 +1,21 @@
-<p>task-form works!</p>
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
+    <div class="form-group">
+      <label for="name">Nombre de la Tarea:</label>
+      <input id="name" type="text" formControlName="name">
+    </div>
+    <div class="form-group">
+      <label for="dueDate">Fecha de Límite:</label>
+      <input id="dueDate" type="date" formControlName="dueDate">
+    </div>
+    <div formArrayName="persons" class="persons-section">
+      <h3>Personas Asociadas</h3>
+      <button type="button" (click)="addPerson()" class="add-btn">Agregar Persona</button>
+      <div *ngFor="let person of persons.controls; let i = index" class="person-form">
+        <div [formGroupName]="i">
+          <app-person-form [personForm]="person"></app-person-form>
+          <button type="button" (click)="removePerson(i)" class="remove-btn">Eliminar Persona</button>
+        </div>
+      </div>
+    </div>
+    <button type="submit" [disabled]="!taskForm.valid" class="submit-btn">Guardar Tarea</button>
+  </form>
