@@ -1,18 +1,29 @@
 <div [formGroup]="personForm" class="person-form">
-    <div class="form-group">
-      <label for="fullName">Nombre Completo:</label>
-      <input id="fullName" type="text" formControlName="fullName">
-    </div>
-    <div class="form-group">
-      <label for="age">Edad:</label>
-      <input id="age" type="number" formControlName="age">
-    </div>
-    <div formArrayName="skills" class="skills-section">
-      <h4>Habilidades</h4>
-      <button type="button" (click)="addSkill()" class="add-btn">Agregar Habilidad</button>
-      <div *ngFor="let skill of skills.controls; let i = index" class="skill-item">
-        <input [formControlName]="i" type="text">
-        <button type="button" (click)="removeSkill(i)" class="remove-btn">Eliminar Habilidad</button>
-      </div>
+  <div class="form-group">
+    <label for="fullName">Nombre Completo:</label>
+    <input id="fullName" type="text" formControlName="fullName" [class.is-invalid]="personForm.get('fullName')?.invalid && personForm.get('fullName')?.touched">
+    <div *ngIf="personForm.get('fullName')?.invalid && personForm.get('fullName')?.touched" class="error-message">
+      <span *ngIf="personForm.get('fullName')?.errors?.['required']">El nombre completo es requerido.</span>
+      <span *ngIf="personForm.get('fullName')?.errors?.['minlength']">El nombre debe tener al menos 5 caracteres.</span>
     </div>
   </div>
+  <div class="form-group">
+    <label for="age">Edad:</label>
+    <input id="age" type="number" formControlName="age" [class.is-invalid]="personForm.get('age')?.invalid && personForm.get('age')?.touched">
+    <div *ngIf="personForm.get('age')?.invalid && personForm.get('age')?.touched" class="error-message">
+      <span *ngIf="personForm.get('age')?.errors?.['required']">La edad es requerida.</span>
+      <span *ngIf="personForm.get('age')?.errors?.['min']">La edad mínima es 18 años.</span>
+    </div>
+  </div>
+  <div formArrayName="skills" class="skills-section">
+    <h4>Habilidades</h4>
+    <button type="button" (click)="addSkill()" class="add-btn">Agregar Habilidad</button>
+    <div *ngFor="let skill of skills.controls; let i = index" class="skill-item">
+      <input [formControlName]="i" type="text" [class.is-invalid]="skill.invalid && skill.touched">
+      <button type="button" (click)="removeSkill(i)" class="remove-btn">Eliminar</button>
+    </div>
+    <div *ngIf="skills.invalid && skills.touched" class="error-message">
+      <span *ngIf="skills.errors?.['required']">Debe agregar al menos una habilidad.</span>
+    </div>
+  </div>
+</div>

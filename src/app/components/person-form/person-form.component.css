@@ -31,3 +31,17 @@
   .remove-btn:hover {
     background-color: #ff4136;
   }
+  .error-message {
+    color: var(--primary-red);
+    font-size: 0.9em;
+    margin-top: 5px;
+  }
+  .is-invalid {
+    border-color: var(--primary-red);
+  }
+  input.ng-invalid.ng-touched {
+    border-color: var(--primary-red);
+  }
+  input.ng-valid.ng-touched {
+    border-color: var(--primary-blue);
+  }

@@ -1,21 +1,32 @@
 <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
-    <div class="form-group">
-      <label for="name">Nombre de la Tarea:</label>
-      <input id="name" type="text" formControlName="name">
+  <div class="form-group">
+    <label for="name">Nombre de la Tarea:</label>
+    <input id="name" type="text" formControlName="name" [class.is-invalid]="taskForm.get('name')?.invalid && taskForm.get('name')?.touched">
+    <div *ngIf="taskForm.get('name')?.invalid && taskForm.get('name')?.touched" class="error-message">
+      <span *ngIf="taskForm.get('name')?.errors?.['required']">El nombre de la tarea es requerido.</span>
+      <span *ngIf="taskForm.get('name')?.errors?.['minlength']">El nombre debe tener al menos 5 caracteres.</span>
     </div>
-    <div class="form-group">
-      <label for="dueDate">Fecha de Límite:</label>
-      <input id="dueDate" type="date" formControlName="dueDate">
+  </div>
+  <div class="form-group">
+    <label for="dueDate">Fecha de Vencimiento:</label>
+    <input id="dueDate" type="date" formControlName="dueDate" [class.is-invalid]="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched">
+    <div *ngIf="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched" class="error-message">
+      <span *ngIf="taskForm.get('dueDate')?.errors?.['required']">La fecha de vencimiento es requerida.</span>
+      <span *ngIf="taskForm.get('dueDate')?.errors?.['futureDate']">La fecha debe ser futura.</span>
     </div>
-    <div formArrayName="persons" class="persons-section">
-      <h3>Personas Asociadas</h3>
-      <button type="button" (click)="addPerson()" class="add-btn">Agregar Persona</button>
-      <div *ngFor="let person of persons.controls; let i = index" class="person-form">
-        <div [formGroupName]="i">
-          <app-person-form [personForm]="person"></app-person-form>
-          <button type="button" (click)="removePerson(i)" class="remove-btn">Eliminar Persona</button>
-        </div>
+  </div>
+  <div formArrayName="persons" class="persons-section">
+    <h3>Personas</h3>
+    <button type="button" (click)="addPerson()" class="add-btn">Agregar Persona</button>
+    <div *ngFor="let person of persons.controls; let i = index" class="person-form">
+      <div [formGroupName]="i">
+        <app-person-form [personForm]="person"></app-person-form>
+        <button type="button" (click)="removePerson(i)" class="remove-btn">Eliminar Persona</button>
       </div>
     </div>
-    <button type="submit" [disabled]="!taskForm.valid" class="submit-btn">Guardar Tarea</button>
-  </form>
+    <div *ngIf="taskForm.get('persons')?.invalid && taskForm.get('persons')?.touched" class="error-message">
+      <span *ngIf="taskForm.get('persons')?.errors?.['required']">Debe agregar al menos una persona.</span>
+    </div>
+  </div>
+  <button type="submit" [disabled]="!taskForm.valid" class="submit-btn">Enviar</button>
+</form>
