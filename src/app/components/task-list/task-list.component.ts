@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Task } from '../../interfaces/task.interface';
 import { TaskService } from '../../services/task.service';
+
+type FilterType = 'all' | 'completed' | 'pending';
 
 @Component({
   selector: 'app-task-list',
@@ -13,40 +16,42 @@ import { TaskService } from '../../services/task.service';
 })
 
 export class TaskListComponent implements OnInit {
-  tasks$: Observable<Task[]>;
+  private filterSubject = new BehaviorSubject<FilterType>('all');
+  currentFilter: FilterType = 'all';
   filteredTasks$: Observable<Task[]>;
 
   constructor(private taskService: TaskService) {
-    this.tasks$ = this.taskService.getTasks();
-    this.filteredTasks$ = this.tasks$;
-  }
-
-  ngOnInit(): void {}
-
-  filterTasks(filter: 'all' | 'completed' | 'pending'): void {
-    this.filteredTasks$ = new Observable<Task[]>(observer => {
-      this.tasks$.subscribe(tasks => {
-        let filteredTasks: Task[];
+    this.filteredTasks$ = combineLatest([
+      this.taskService.tasks$,
+      this.filterSubject
+    ]).pipe(
+      map(([tasks, filter]) => {
         switch (filter) {
           case 'completed':
-            filteredTasks = tasks.filter(task => task.completed);
-            break;
+            return tasks.filter(task => task.completed);
           case 'pending':
-            filteredTasks = tasks.filter(task => !task.completed);
-            break;
+            return tasks.filter(task => !task.completed);
           default:
-            filteredTasks = tasks;
+            return tasks;
         }
-        observer.next(filteredTasks);
-      });
-    });
+      })
+    );
   }
 
-  toggleTaskCompletion(taskId: number): void {
-    this.taskService.toggleTaskCompletion(taskId);
+  ngOnInit(): void {
+    this.taskService.getTasks().subscribe();
+  }
+
+  filterTasks(filter: FilterType): void {
+    this.filterSubject.next(filter);
+    this.currentFilter = filter;
+  }
+
+  toggleTaskCompletion(task: Task): void {
+    this.taskService.toggleTaskCompletion(task).subscribe();
   }
 
   deleteTask(taskId: number): void {
-    this.taskService.deleteTask(taskId);
+    this.taskService.deleteTask(taskId).subscribe();
   }
 }
