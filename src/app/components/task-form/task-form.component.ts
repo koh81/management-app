@@ -36,7 +36,7 @@ export class TaskFormComponent implements OnInit {
   addPerson(): void {
     const personForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(5)]],
-      age: ['', [Validators.required, Validators.min(2)]],
+      age: ['', [Validators.required, Validators.min(18)]],
       skills: this.fb.array([], [Validators.required])
     });
     this.persons.push(personForm);
