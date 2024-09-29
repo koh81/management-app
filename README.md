@@ -49,13 +49,13 @@ Sigue estos pasos para instalar y ejecutar la aplicación en tu entorno local:
 1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/koh81/gestion-tareas-angular.git
+   git clone https://github.com/koh81/management-app.git
    ```
 
 2. Navega al directorio del proyecto:
 
    ```bash
-   cd gestion-tareas-angular
+   cd management-app
    ```
 
 3. Instala las dependencias del proyecto:
